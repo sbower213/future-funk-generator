@@ -4,6 +4,7 @@ var MarkovChain = require('markovchain');
 var Jimp = require('jimp');
 var tracery = require('tracery-grammar');
 var fullwidth = require('fullwidth').default;
+var exphbs = require('express-handlebars');
 var app = express();
 var PORT = 3000;
 
@@ -21,6 +22,10 @@ var grammar = tracery.createGrammar(nameGrammar);
   //})
   return wordList[~~(Math.random()*wordList.length)];
 }*/
+
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+
 
 var createAlbumArt = function(artist, album) {
 
@@ -45,7 +50,6 @@ var createAlbumArt = function(artist, album) {
 				return Promise.all(jimps);
 			}).then(function (data) {
 				var outputFilename = "results/" + new Date().getTime().toString()+".jpg";
-
 				data[0].resize(800,800)
 						.blur(Math.floor(1 + Math.random()*3))
 						.composite(data[1].scaleToFit(800,800)
@@ -120,7 +124,7 @@ app.get("/", function(req,res){
     }
 	var albumArtFileLocation = createAlbumArt(artist, album);
     
-	res.send("Artist: "+artist+"<br>Album: "+album+"<br>Song list: "+songList);
+	res.render('index', {artist: artist, album: album, songList: songList, albumArt: albumArtFileLocation});
 });
 
 app.listen(PORT, function() {
