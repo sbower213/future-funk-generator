@@ -2,11 +2,14 @@ var express = require('express');
 var fs = require('fs');
 var MarkovChain = require('markovchain');
 var Jimp = require('jimp');
+var tracery = require('tracery-grammar');
+var fullwidth = require('fullwidth').default;
 var app = express();
 var PORT = 3000;
 
 var songArray = fs.readFileSync('./futurefunksonglist.txt').toString().split(/\s+/);
 var nameGrammar = JSON.parse(fs.readFileSync('./namegrammar.json').toString());
+var grammar = tracery.createGrammar(nameGrammar);
 //console.log(songArray);
 
 //var titleMarkov = new MarkovChain(fs.readFileSync('./futurefunksonglist.txt', 'utf8'))
@@ -62,19 +65,62 @@ var createAlbumArt = function() {
 
 }
 
-var getSongName = function() {
+// between min and max inclusive
+var getRandInt = function(min, max) {
+    return (min + Math.floor(Math.random() * (max - min)));
+}
+
+var getSongName = function(album = false) {
     var songName = "";
-	var songLength = 1 + Math.floor(Math.random() * 6);
+	var songLength = getRandInt(1,7);
 	for(var i=0; i < songLength; i++){
-		songName += songArray[Math.floor(Math.random() * songArray.length)] + " ";
+		songName += songArray[getRandInt(0,songArray.length)] + " ";
 	}
+    var fullwidthNum = getRandInt(0,9);
+    if(fullwidthNum === 0) {
+        songName = fullwidth(songName);
+    }
+    var featuringNum = getRandInt(0,5);
+    if(!album && featuringNum === 0) {
+        var feat = getArtist();
+        songName += " feat. "+feat;
+    }
     return songName;
+}
+
+var getArtist = function() {
+    var artist = grammar.flatten("#name#");
+    var fullwidthNum = getRandInt(0,9);
+    if(fullwidthNum === 0) {
+        artist = fullwidth(artist);
+    }
+    return artist;
 }
 
 app.get("/", function(req,res){
 	//console.log(titleMarkov.start(getChains).end(5).process());
-	var grammar = tracery.createGrammar(nameGrammar);
-	res.send(getSongName());
+    var artist = getArtist();
+    var numSongs = getRandInt(8,12);
+    var songList = [];
+    for(var i=0; i < numSongs; i++) {
+        songList.push(getSongName());
+    }
+    var albumNum = getRandInt(0,3);
+    var album = "";
+    switch(albumNum) {
+        case 0: //new artist-ish name
+            album = getArtist();
+            break;
+        case 1: //new song-ish name
+            album = getSongName(true);
+            break;
+        case 2: //one of the song titles
+            var songNum = getRandInt(0,songList.length);
+            album = songList[songNum];
+            break; //unnecessary roughness
+    }
+    
+	res.send("Artist: "+artist+"<br>Album: "+album+"<br>Song list: "+songList);
 });
 
 app.listen(PORT, function() {
