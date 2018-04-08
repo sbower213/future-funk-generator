@@ -1,0 +1,20 @@
+<div class="container">
+    <ul id="top">
+        <div id="left">
+            <h2>
+                Artist: {{artist}}
+                <br>
+                Album: {{album}}
+            </h2>
+        </div>
+        <div id="art">
+            {{albumart}}
+        </div>
+    <h2>Songs:</h2>
+    </ul>
+    <ul id="songs_list">
+        {{#each songList}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ul>
+</div>

@@ -3,6 +3,7 @@ var fs = require('fs');
 var MarkovChain = require('markovchain');
 var tracery = require('tracery-grammar');
 var fullwidth = require('fullwidth').default;
+var exphbs = require('express-handlebars');
 var app = express();
 var PORT = 3000;
 
@@ -21,7 +22,8 @@ var grammar = tracery.createGrammar(nameGrammar);
   return wordList[~~(Math.random()*wordList.length)];
 }*/
 
-
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 
 
 // between min and max inclusive
@@ -79,7 +81,7 @@ app.get("/", function(req,res){
             break; //unnecessary roughness
     }
     
-	res.send("Artist: "+artist+"<br>Album: "+album+"<br>Song list: "+songList);
+	res.render('index', {artist: artist, album: album, songList: songList});
 });
 
 app.listen(PORT, function() {
