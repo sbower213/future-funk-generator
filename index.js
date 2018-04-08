@@ -27,7 +27,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 
-var createAlbumArt = function() {
+var createAlbumArt = function(artist, album) {
 
 	var animeImages = new Array();
 	fs.readdir("./futurefunkbackgrounds", function(err1, bgFilenames) {
@@ -51,9 +51,8 @@ var createAlbumArt = function() {
 			}).then(function (data) {
 				var outputFilename = "results/" + new Date().getTime().toString()+".jpg";
 				data[0].resize(800,800)
-							.blur(Math.floor(1 + Math.random()*3))
-							//.brightness((-0.5) + Math.random())
-							.composite(data[1].scaleToFit(800,800)
+						.blur(Math.floor(1 + Math.random()*3))
+						.composite(data[1].scaleToFit(800,800)
 						.scale(.3 + Math.random())
 						.opacity(Math.random()),
 									   Math.floor(Math.random() * 500),
@@ -61,6 +60,12 @@ var createAlbumArt = function() {
 									  )
 							.write(outputFilename);
 							//console.log(outputFilename);
+								 Math.floor(Math.random() * 500),
+								 Math.floor(Math.random() * 500)
+								)
+						.write(outputFilename);
+				console.log(outputFilename);
+				return outputFileName;
 			});
 			
 		});
@@ -126,8 +131,9 @@ app.get("/", function(req,res){
             }
             break; //unnecessary roughness
     }
+	var albumArtFileLocation = createAlbumArt(artist, album);
     
-	res.render('index', {artist: artist, album: album, songList: songList});
+	res.render('index', {artist: artist, album: album, songList: songList, albumArt: albumArtFileLocation});
 });
 
 app.listen(PORT, function() {
