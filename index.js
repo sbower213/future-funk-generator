@@ -22,7 +22,7 @@ var grammar = tracery.createGrammar(nameGrammar);
   return wordList[~~(Math.random()*wordList.length)];
 }*/
 
-var createAlbumArt = function() {
+var createAlbumArt = function(artist, album) {
 
 	var animeImages = new Array();
 	fs.readdir("./futurefunkbackgrounds", function(err1, bgFilenames) {
@@ -47,17 +47,16 @@ var createAlbumArt = function() {
 				var outputFilename = "results/" + new Date().getTime().toString()+".jpg";
 
 				data[0].resize(800,800)
-							.blur(Math.floor(1 + Math.random()*3))
-							//.brightness((-0.5) + Math.random())
-							.composite(data[1].scaleToFit(800,800)
+						.blur(Math.floor(1 + Math.random()*3))
+						.composite(data[1].scaleToFit(800,800)
 						.scale(.3 + Math.random())
 						.opacity(Math.random()),
-									   Math.floor(Math.random() * 500),
-									   Math.floor(Math.random() * 500)
-									  )
-							.write(outputFilename);
-							console.log(outputFilename);
-				
+								 Math.floor(Math.random() * 500),
+								 Math.floor(Math.random() * 500)
+								)
+						.write(outputFilename);
+				console.log(outputFilename);
+				return outputFileName;
 			});
 			
 		});
@@ -119,6 +118,7 @@ app.get("/", function(req,res){
             album = songList[songNum];
             break; //unnecessary roughness
     }
+	var albumArtFileLocation = createAlbumArt(artist, album);
     
 	res.send("Artist: "+artist+"<br>Album: "+album+"<br>Song list: "+songList);
 });
