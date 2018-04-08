@@ -11,7 +11,8 @@
   "dependencies": {
     "express": "^4.16.3",
     "fs": "0.0.1-security",
+    "fullwidth": "^1.2.0",
     "markovchain": "^1.0.2",
-    "tracery": "^1.0.3"
+    "tracery-grammar": "^2.7.3"
   }
 }
