@@ -1,20 +1,20 @@
 <div class="container">
-    <ul id="top">
-        <div id="left">
-            <h2>
-                Artist: {{artist}}
-                <br>
-                Album: {{album}}
-            </h2>
-        </div>
-        <div id="art">
+	<div class="left">
+		<header id="albumInfo">
+			<b>Artist:</b> {{artist}}
+			<br>
+			<b>Album:</b> {{album}}
+		</header>
+		<h2>Songs:</h2>
+		<ul id="songs_list">
+			{{#each songList}}
+				<li>{{this}}</li>
+			{{/each}}
+		</ul>
+	</div>
+	<div class="right">
+		<div id="art">
             <img src="{{albumArt}}" />
         </div>
-    <h2>Songs:</h2>
-    </ul>
-    <ul id="songs_list">
-        {{#each songList}}
-            <li>{{this}}</li>
-        {{/each}}
-    </ul>
+	</div>
 </div>

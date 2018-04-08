@@ -10,6 +10,7 @@ var PORT = 3000;
 
 
 app.use('/results', express.static('results'));
+app.use('/public', express.static('/public'));
 var songArray = fs.readFileSync('./futurefunksonglist.txt').toString().split(/\s+/);
 var nameGrammar = JSON.parse(fs.readFileSync('./namegrammar.json').toString());
 var grammar = tracery.createGrammar(nameGrammar);
