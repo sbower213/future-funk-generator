@@ -60,8 +60,7 @@ var createAlbumArt = function() {
 									   Math.floor(Math.random() * 500)
 									  )
 							.write(outputFilename);
-							console.log(outputFilename);
-				
+							//console.log(outputFilename);
 			});
 			
 		});
@@ -87,7 +86,7 @@ var getSongName = function(album = false) {
     var featuringNum = getRandInt(0,5);
     if(!album && featuringNum === 0) {
         var feat = getArtist();
-        songName += " feat. "+feat;
+        songName += " (feat. "+feat+")";
     }
     return songName;
 }
@@ -121,6 +120,10 @@ app.get("/", function(req,res){
         case 2: //one of the song titles
             var songNum = getRandInt(0,songList.length);
             album = songList[songNum];
+            var feat = album.indexOf("(feat.");
+            if(feat !== -1) {
+                album = album.substring(0, feat);
+            }
             break; //unnecessary roughness
     }
     
