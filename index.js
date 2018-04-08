@@ -1,6 +1,7 @@
 var express = require('express');
 var fs = require('fs');
 var MarkovChain = require('markovchain');
+var Jimp = require('jimp');
 var tracery = require('tracery-grammar');
 var fullwidth = require('fullwidth').default;
 var exphbs = require('express-handlebars');
@@ -25,6 +26,48 @@ var grammar = tracery.createGrammar(nameGrammar);
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
+
+var createAlbumArt = function() {
+
+	var animeImages = new Array();
+	fs.readdir("./futurefunkbackgrounds", function(err1, bgFilenames) {
+		var bgImageName = "futurefunkbackgrounds/" + bgFilenames[Math.floor(Math.random()*bgFilenames.length)];
+		
+		fs.readdir("./futurefunkimages", function(err, overlayFilenames) {		
+			//var overlayImages = new Array();
+			//var numOverlays = Math.floor(Math.random() + 2);
+			//for(var i=0; i<numOverlays; i++){
+			//	overlayImages.push(overlayFilenames[Math.floor(Math.random() * overlayFilenames.length)]);
+			//}
+			
+			var overlayImageName = "futurefunkimages/" + overlayFilenames[Math.floor(Math.random()*overlayFilenames.length)];
+			
+			var jimps = [];
+			jimps.push(Jimp.read(bgImageName));
+			jimps.push(Jimp.read(overlayImageName));
+			
+			Promise.all(jimps).then(function(data) {
+				return Promise.all(jimps);
+			}).then(function (data) {
+				var outputFilename = "results/" + new Date().getTime().toString()+".jpg";
+				data[0].resize(800,800)
+							.blur(Math.floor(1 + Math.random()*3))
+							//.brightness((-0.5) + Math.random())
+							.composite(data[1].scaleToFit(800,800)
+						.scale(.3 + Math.random())
+						.opacity(Math.random()),
+									   Math.floor(Math.random() * 500),
+									   Math.floor(Math.random() * 500)
+									  )
+							.write(outputFilename);
+							console.log(outputFilename);
+				
+			});
+			
+		});
+	});
+
+}
 
 // between min and max inclusive
 var getRandInt = function(min, max) {
@@ -86,4 +129,5 @@ app.get("/", function(req,res){
 
 app.listen(PORT, function() {
     console.log('Server listening on port:', PORT);
+	createAlbumArt();
 });
