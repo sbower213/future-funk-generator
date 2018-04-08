@@ -1,0 +1,10 @@
+{
+    "name" : ["#word# #word#", "#word##katakana#",  "#word##symbol#", "#title# #word#", "#word# #name#"],
+    "word" : ["#word##end#", "#word##symbol#", "#word##number#", "#title#", "#katakana#", "Windows", "Macintosh", "Android", "Bae", "Network", "Desire", "Pepsi", "CocaCola", "Shop", "Tempo", "Rose", "Nintendo", "Sony", "Tokyo", "Anime", "Kyoto", "Osaka", "Sapporo", "Nagoya", "Kobe", "Fuji", "Hokkaido", "Honshu", "Shikoku", "Kyushu","Story", "Candy", "Island", "Marina", "Cola", "Bepis", "Celadon", "Azure", "Cerulean", "Periwinkle", "Lavender", "Fuchsia", "Saffron", "Viridian", "Azalea", "Castelia", "Drift", "Aroma", "Lumiose", "Seven", "Solaceon", "Violet", "Soda", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Neptune", "Space", "Galaxy", "Lit", "Shine", "Lean", "Spicy", "Coral", "Station", "Tape", "Hotel", "Macross", "Strider", "Future", "Funk", "Cloud", "Night"],
+    "end" : ["#end##end#", "wave", "core", "sis", "kun", "chan", "step", "san", ".exe"],
+    "title" : ["Yung", "Saint", "Moe", "Windows", "Digital", "Future", "Tsundere", "Sailor", "Virtual", "Neotokyo", "Big", "Usagi", "Maple", "Cyber"],
+    "number" : ["#number#-#yearend#", "69", "420", "2002", "2001", "2003", "73", "#yearend#", "19#yearend#"],
+    "yearend" : ["80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99"],
+    "symbol" : ["#symbol##symbol#", "+", "~", "!", "@", "#", "$", "^", "&", "*", "/", ".", "_", ">", ";", "\\"],
+    "katakana" : ["アメリカ", "ツアー", "アベック", "アイドル", "アイスクリーム", "アニメ", "アルコール", "バーゲン", "バター", "ビール", "ボタン", "ブラセラ", "ブルマ", "チアマン", "ダブル", "ダンプカー", "デスク", "ドリフト", "エロ", "エログロ", "エッチ", "ファミコン", "～フェチ", "ゲーセン", "ググる", "ハウス", "ホットケーキ", "イエス", "カリウム", "キリスト", "コック", "マイ〜", "マザコン", "ミルク", "モラトリアム", "ニート", "オージー", "オージー", "ペニス"]
+}
